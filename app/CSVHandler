@@ -1,0 +1,32 @@
+import csv
+import shutil
+
+class CSVHandler:
+    def __init__(self, filename):
+        self.filename = filename
+
+    def read_csv(self):
+        """Reads from a CSV file and returns a list of rows."""
+        data = []
+        with open(self.filename, mode='r', newline='', encoding='utf-8') as file:
+            reader = csv.reader(file)
+            for row in reader:
+                data.append(row)
+        return data
+
+    def write_csv(self, data, mode='w'):
+        """Writes data to a CSV file. `data` should be a list of lists."""
+        with open(self.filename, mode=mode, newline='', encoding='utf-8') as file:
+            writer = csv.writer(file)
+            for row in data:
+                writer.writerow(row)
+
+    def copy_csv(self, new_filename):
+        """Copies the current CSV to a new file."""
+        shutil.copy(self.filename, new_filename)
+
+# Example usage:
+csv_handler = CSVHandler('example.csv')
+csv_handler.write_csv([['Name', 'Age'], ['Alice', 30], ['Bob', 25]])
+print(csv_handler.read_csv())
+csv_handler.copy_csv('example_copy.csv')
